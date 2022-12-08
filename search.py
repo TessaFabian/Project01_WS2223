@@ -122,7 +122,31 @@ def depthFirstSearch(problem: SearchProblem):
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    closed = set()
+    fringe = util.Queue()
+
+    startState = problem.getStartState()
+    fringe.push((startState, []))
+
+    while not fringe.isEmpty():
+        node = fringe.pop()
+        currentState = node[0]
+        path = node[1]
+
+        if problem.isGoalState(currentState):
+            return path
+
+        if currentState not in closed:
+            closed.add(currentState)
+        else:
+            continue
+
+        successors = problem.getSuccessors(currentState)
+        for successor in successors:
+            if successor[0] not in closed:
+                currentPath = path + [successor[1]]
+                fringe.push((successor[0], currentPath))
+
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
