@@ -96,7 +96,6 @@ def depthFirstSearch(problem: SearchProblem):
     startState = problem.getStartState()
     fringe.push((startState, []))
     while not fringe.isEmpty():
-
         node = fringe.pop()
         currentState = node[0]
         path = node[1]
@@ -106,16 +105,12 @@ def depthFirstSearch(problem: SearchProblem):
 
         if currentState not in closed:
             closed.add(currentState)
-
-        else:
-            continue
-
-        successors = problem.getSuccessors(currentState)
-        #print(successors)
-        for successor in successors:
-            if successor[0] not in closed:
-                currentPath = path + [successor[1]]
-                fringe.push((successor[0], currentPath))
+            successors = problem.getSuccessors(currentState)
+            for successor in successors:
+                if successor[0] not in closed:
+                    newPath = path + [successor[1]]
+                    newNode = (successor[0], newPath)
+                    fringe.push(newNode)
 
 
 
@@ -135,17 +130,14 @@ def breadthFirstSearch(problem: SearchProblem):
 
         if problem.isGoalState(currentState):
             return path
-
         if currentState not in closed:
             closed.add(currentState)
-        else:
-            continue
-
-        successors = problem.getSuccessors(currentState)
-        for successor in successors:
-            if successor[0] not in closed:
-                currentPath = path + [successor[1]]
-                fringe.push((successor[0], currentPath))
+            successors = problem.getSuccessors(currentState)
+            for successor in successors:
+                if successor[0] not in closed:
+                    newPath = path + [successor[1]]
+                    newNode = (successor[0], newPath)
+                    fringe.push(newNode)
 
 
 def uniformCostSearch(problem: SearchProblem):
